@@ -2,7 +2,7 @@
 This is an automation project I undertook to automate a task I do every month. This program runs for every server provided in a file that's not posted here on GitHub
 
 The task:
-1) For all of our servers, run a SQL script (that I created) to grab the size of the databases.
+1) For all of our SQL servers, run a SQL script (that I created) to grab the size of the databases.
 2) Edit an existing spreadsheet for the specified server and add a column for the current date. Remove the entry from two months ago.
 3) Paste in the the new sizes and note the change.
 4) Save the document and upload it to Confluence.
