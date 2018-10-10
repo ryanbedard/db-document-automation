@@ -1,5 +1,5 @@
 # database-space
-This is an automation project I undertook to automate a task I do every month.
+This is an automation project I undertook to automate a task I do every month. This program runs for every server provided in a file that's not posted here on GitHub
 
 The task:
 1) For all of our servers, run a SQL script (that I created) to grab the size of the databases.
@@ -8,7 +8,6 @@ The task:
 4) Save the document and upload it to Confluence.
 
 The program:
-Runs for every server provided in a file that's not posted here on GitHub
 
 - Setup
 1) Connect to SQL and run the SQL script to get the database space.
