@@ -1,4 +1,4 @@
-# database-space
+# Database Document Automation
 This is an automation project I undertook to automate a task I do every month. This program runs for every server provided in a file that's not posted here on GitHub
 
 The task:
