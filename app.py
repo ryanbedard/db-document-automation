@@ -83,6 +83,7 @@ def generate_documents():
 if __name__ == "__main__":
     instructions()
     pastSelection = ''
+    selectionNumber = ''
     newSettings = settings.connection_string
     while True:
         selection = ''
@@ -112,6 +113,30 @@ if __name__ == "__main__":
                     newSettings.append('\n' + selection)
                     newfile.writelines(newSettings)
                 print('Entry added')
+        elif pastSelection == 'edit':
+            pastSelection = ''
+            if selection == 'exit':
+                break
+            elif len(newSettings) > int(selection) >= 0:
+                pastSelection = 'string'
+                selectionNumber = selection
+                print('Enter in the new string:')
+            else:
+                pastSelection = 'edit'
+                print('Invalid selection')
+        elif pastSelection == 'string':
+            pastSelection = ''
+            if selection == 'exit':
+                break
+            else:
+                with open('connections.txt', "w") as newfile:
+                    if selectionNumber == len(newSettings) - 1:
+                        newSettings[int(selectionNumber)] = selection
+                        newfile.writelines(newSettings)
+                    else:
+                        newSettings[int(selectionNumber)] = selection + '\n'
+                        newfile.writelines(newSettings)
+                print('Entry edited')
         else:
             if selection == 'view':
                 print(''.join(newSettings))
@@ -126,6 +151,14 @@ if __name__ == "__main__":
             elif selection == 'add':
                 pastSelection = selection
                 print('Enter a connection string or type exit to return to the main menu:')
+            elif selection == 'edit':
+                pastSelection = selection
+                print('Select an option to edit or type exit to return to the main menu:')
+                t = 0
+                for connection in newSettings:
+                    connection = connection.rstrip('\n')
+                    print(str(t) + ' ' + connection),
+                    t += 1
             elif selection == 'run':
                 generate_documents()
                 print('''Documents have been generated
