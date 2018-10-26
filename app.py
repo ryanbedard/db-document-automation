@@ -77,14 +77,14 @@ def generate_documents():
         copyfile(new_file, old_file)
         if os.path.exists(new_file):
             os.remove(new_file)
-    db_test.executor.close()
+        db_test.executor.close()
 
 
 def console():
     instructions()
-    pastSelection = ''
-    selectionNumber = ''
-    newSettings = settings.connection_string
+    past_selection = ''
+    selection_number = ''
+    new_settings = settings.connection_string
     while True:
         selection = ''
         while selection == '':
@@ -92,70 +92,76 @@ def console():
 
         selection = selection.lower().strip()
 
-        if pastSelection == 'remove':
-            pastSelection = ''
+        if past_selection == 'remove':
+            past_selection = ''
             if selection == 'exit':
-                break
-            elif len(newSettings) > int(selection) >= 0:
-                del newSettings[int(selection)]
+                past_selection = ''
+                selection_number = ''
+                instructions()
+            elif len(new_settings) > int(selection) >= 0:
+                del new_settings[int(selection)]
                 with open('connections.txt', "w") as newfile:
-                    newfile.writelines(newSettings)
+                    newfile.writelines(new_settings)
                 print('Entry removed')
             else:
                 print('Invalid Entry')
-                break
-        elif pastSelection == 'add':
-            pastSelection = ''
+        elif past_selection == 'add':
+            past_selection = ''
             if selection == 'exit':
-                break
+                past_selection = ''
+                selection_number = ''
+                instructions()
             else:
                 with open('connections.txt', "w") as newfile:
-                    newSettings.append('\n' + selection)
-                    newfile.writelines(newSettings)
+                    new_settings.append('\n' + selection)
+                    newfile.writelines(new_settings)
                 print('Entry added')
-        elif pastSelection == 'edit':
-            pastSelection = ''
+        elif past_selection == 'edit':
             if selection == 'exit':
-                break
-            elif len(newSettings) > int(selection) >= 0:
-                pastSelection = 'string'
-                selectionNumber = selection
+                past_selection = ''
+                selection_number = ''
+                instructions()
+            elif len(new_settings) > int(selection) >= 0:
+                past_selection = 'string'
+                selection_number = selection
                 print('Enter in the new string:')
             else:
-                pastSelection = 'edit'
+                past_selection = 'edit'
                 print('Invalid selection')
-        elif pastSelection == 'string':
-            pastSelection = ''
+        elif past_selection == 'string':
+            past_selection = ''
             if selection == 'exit':
-                break
+                past_selection = ''
+                selection_number = ''
+                instructions()
             else:
                 with open('connections.txt', "w") as newfile:
-                    if selectionNumber == len(newSettings) - 1:
-                        newSettings[int(selectionNumber)] = selection
-                        newfile.writelines(newSettings)
+                    if selection_number == len(new_settings) - 1:
+                        new_settings[int(selection_number)] = selection
+                        newfile.writelines(new_settings)
                     else:
-                        newSettings[int(selectionNumber)] = selection + '\n'
-                        newfile.writelines(newSettings)
+                        new_settings[int(selection_number)] = selection + '\n'
+                        newfile.writelines(new_settings)
                 print('Entry edited')
         else:
             if selection == 'view':
-                print(''.join(newSettings))
+                print(''.join(new_settings))
             elif selection == 'remove':
-                pastSelection = selection
+                past_selection = selection
                 print('Select an option to remove or type exit to return to the main menu:')
                 t = 0
-                for connection in newSettings:
+                for connection in new_settings:
                     connection = connection.rstrip('\n')
                     print(str(t) + ' ' + connection),
                     t += 1
             elif selection == 'add':
-                pastSelection = selection
+                past_selection = selection
                 print('Enter a connection string or type exit to return to the main menu:')
             elif selection == 'edit':
-                pastSelection = selection
+                past_selection = selection
                 print('Select an option to edit or type exit to return to the main menu:')
                 t = 0
-                for connection in newSettings:
+                for connection in new_settings:
                     connection = connection.rstrip('\n')
                     print(str(t) + ' ' + connection),
                     t += 1
