@@ -80,7 +80,7 @@ def generate_documents():
     db_test.executor.close()
 
 
-if __name__ == "__main__":
+def console():
     instructions()
     pastSelection = ''
     selectionNumber = ''
@@ -162,6 +162,10 @@ if __name__ == "__main__":
             elif selection == 'run':
                 generate_documents()
                 print('''Documents have been generated
-                Copy the xls files and upload them into Confluence''')
+                    Copy the xls files and upload them into Confluence''')
             elif selection == 'help':
                 instructions()
+
+
+if __name__ == "__main__":
+    console()
