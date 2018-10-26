@@ -34,9 +34,10 @@ def generate_documents():
                                            "AND DB_NAME(database_id) NOT LIKE 'z%' GROUP BY database_id ORDER BY database_name"))
         r = list(result)
         server_name = connection[connection.find('@') + 1:connection.find('.')].upper()
-        old_file = server_name + '.csv'
-        new_file = 'change.csv'
-        xls_file = server_name + '.xls'
+        old_file = '{}/'.format(settings.PROJECT_ROOT) + server_name + '.csv'
+        oldversion_file = '{}/'.format(settings.PROJECT_ROOT) + 'old_' + server_name + '.csv'
+        new_file = '{}/change.csv'.format(settings.PROJECT_ROOT)
+        xls_file = '{}/'.format(settings.PROJECT_ROOT) + server_name + '.xls'
         with open(old_file, 'r', newline='') as csvinput:
             with open(new_file, 'w', newline='') as csvoutput:
                 writer = csv.writer(csvoutput)
@@ -61,19 +62,20 @@ def generate_documents():
                             successful = True
                         elif row[0] == r[i][0]:
                             x = row[-2]
+                            print(row)
                             y = (r[i][1] - Decimal(x.strip(' "')))
                             writer.writerow(row[:-3] + [row[-2]] + [r[i][1]] + [y])
                             i += 1
                             successful = True
                         elif row[0] in test:
-                            writer.writerow(row[:-3] + [row[-2]] + ['Deleted'] + ['0'])
+                            writer.writerow(row[:-3] + [row[-2]] + ['0'] + ['0'])
                             successful = True
                         else:
                             n = len(row) - 3
                             writer.writerow([r[i][0]] + [''] * n + [r[i][1]] + ['0'])
                             i += 1
         pandas.read_csv(new_file).to_excel(xls_file, index=False)
-        copyfile(old_file, 'old_' + old_file)
+        copyfile(old_file, oldversion_file)
         copyfile(new_file, old_file)
         if os.path.exists(new_file):
             os.remove(new_file)
